@@ -1,14 +1,17 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Reusable workflow
+
 on:
   workflow_call:
-     inputs:
-       who-to-greet:
-         description: 'The person to greet'
-         type: string
-         required: true
-         default: World
+    inputs:
+      who-to-greet:
+        description: 'The person to greet'
+        type: string
+        required: true
+        default: World
+    outputs:
+      current-time:
+        description: 'The time when greeting.'
+        value: ${{ jobs.reusable-job.outputs.current-time }}
 
 jobs:
   reusable-job:
@@ -21,10 +24,3 @@ jobs:
       - name: Set time
         id: time
         run: echo "time=$(date)" >> $GITHUB_OUTPUT
-  outputs:
-     current-time: ${{ steps.time.outputs.time }}
-     
-  outputs:
-     current-time:
-       description: 'The time when greeting.'
-       value: ${{ jobs.reusable-job.outputs.current-time }}
